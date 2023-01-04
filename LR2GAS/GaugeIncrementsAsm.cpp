@@ -365,36 +365,92 @@ void GetIncrements::HookIncrements()
 
 double GetIncrements::Total()
 {
-	if (notesNum < 20)
+
+	double f1;
+	double f2;
+
+	if (magicNumber >= 240)
 	{
-		return 10.0;
+		f1 = 1.0;
 	}
-	if (notesNum < 30)
+	else if (magicNumber >= 230)
 	{
-		return 14.0 - (notesNum / 5.0);
+		f1 = 1.11;
 	}
-	if (notesNum < 60)
+	else if (magicNumber >= 210)
 	{
-		return 9.0 - (notesNum / 15.0);
+		f1 = 1.25;
 	}
-	if (notesNum < 125)
+	else if (magicNumber >= 200)
 	{
-		return 5.0 - ((notesNum - 60.0) / 65.0);
+		f1 = 1.5;
 	}
-	if (notesNum < 250)
+	else if (magicNumber >= 180)
 	{
-		return 5.0 - (notesNum / 125.0);
+		f1 = 1.666;
 	}
-	if (notesNum < 500)
+	else if (magicNumber >= 160)
 	{
-		return 4.0 - (notesNum / 250.0);
+		f1 = 2.0;
 	}
-	if (notesNum < 1000)
+	else if (magicNumber >= 150)
 	{
-		return 3.0 - (notesNum / 500.0);
+		f1 = 2.5;
 	}
-	return 1;
+	else if (magicNumber >= 130)
+	{
+		f1 = 3.333;
+	}
+	else if (magicNumber >= 120)
+	{
+		f1 = 5.0;
+	}
+	else
+	{
+		f1 = 10.0;
+	}
+
+
+	if (notesNum <= 20)
+	{
+		f2 = 10.0;
+	}
+	else if (notesNum < 30)
+	{
+		f2 = 14.0 - (notesNum / 5.0);
+	}
+	else if (notesNum < 60)
+	{
+		f2 = 9.0 - (notesNum / 15.0);
+	}
+	else if (notesNum < 125)
+	{
+		f2 = 5.0 - ((notesNum - 60.0) / 65.0);
+	}
+	else if (notesNum < 250)
+	{
+		f2 = 5.0 - (notesNum / 125.0);
+	}
+	else if (notesNum < 500)
+	{
+		f2 = 4.0 - (notesNum / 250.0);
+	}
+	else if (notesNum < 1000)
+	{
+		f2 = 3.0 - (notesNum / 500.0);
+	}
+	else
+	{
+		f2 = 1.0;
+	}
+
+	if (f1 > f2)
+	{
+		return f1;
+	}
+	return f2;
 }
+
 
 GaugeIncrements GetIncrements::Easy()
 {
@@ -432,9 +488,19 @@ GaugeIncrements GetIncrements::Hard()
 	result.pgreat = 0.1;
 	result.great = 0.1;
 	result.good = 0.05;
-	result.mashPoor = total * -2.0;
-	result.bad = total * -6.0;
-	result.missPoor = total * -10.0;
 
+	if (*hkGauge < 32)
+	{
+		result.mashPoor = (total * -2.0) * 0.6;
+		result.bad = (total * -6.0) * 0.6;
+		result.missPoor = (total * -10.0) * 0.6;
+	}
+	else
+	{
+		result.mashPoor = total * -2.0;
+		result.bad = total * -6.0;
+		result.missPoor = total * -10.0;
+	}
 	return result;
 }
+
